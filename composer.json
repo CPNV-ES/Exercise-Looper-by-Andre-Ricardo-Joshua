@@ -1,0 +1,19 @@
+{
+  "name": "cpnv/exercise-looper",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Andre"
+    },
+    {
+      "name": "Ricardo"
+    },
+    {
+      "name": "Joshua"
+    }
+  ],
+  "require": {
+  }
+}

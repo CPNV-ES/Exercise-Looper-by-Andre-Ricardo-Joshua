@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
+
+use App\Models\Exercice;
 
 class ExerciseController
 {
@@ -10,14 +12,17 @@ class ExerciseController
     public function index(): array
     {
         // sample data. need to change to fetch from the DB.
-        $exercices = [
+
+        $exercices = Exercice::getAllExercices();
+
+        /*$exercices = [
             ['id' => 45, 'title' => 'Le nouvel exo'],
             ['id' => 73, 'title' => 'Un autre exercice'],
             ['id' => 81, 'title' => 'Exercice de Géographie'],
-        ];
+        ];*/
 
         return [
-            'view' => 'view/Exercises',
+            'view' => 'views/Exercises',
             'data' => [
                 'title' => 'Exercises',
                 'exercices' => $exercices

@@ -1,7 +1,7 @@
 <?php
 
-use App\Controller\ExerciseController;
-use App\Controller\HomeController;
+use App\Controllers\ExerciseController;
+use App\Controllers\HomeController;
 use App\Router;
 
 return function (Router $router) {

@@ -27,14 +27,14 @@ class Renderer
         // Handle specific status codes like 404 or 500 by rendering an error page.
         if (array_key_exists('status_code', $rendering_options)) {
             http_response_code($rendering_options['status_code']);
-            $error_view_path = $this->sourceDir . '/view/errors/' . $rendering_options['status_code'] . '.php';
+            $error_view_path = $this->sourceDir . '/views/errors/' . $rendering_options['status_code'] . '.php';
 
             // Ensure the error view file exists before trying to include it.
             if (file_exists($error_view_path)) {
                 $view_content_path = $error_view_path;
             } else {
                 // Fallback for a missing error view.
-                $view_content_path = $this->sourceDir . '/view/errors/500.php';
+                $view_content_path = $this->sourceDir . '/views/errors/500.php';
             }
         }
         // Handle regular page rendering.
@@ -44,11 +44,11 @@ class Renderer
         // If no view and no status code is provided, something is wrong.
         else {
             http_response_code(500);
-            $view_content_path = $this->sourceDir . '/view/errors/500.php';
+            $view_content_path = $this->sourceDir . '/views/errors/500.php';
         }
 
         // The $route, $view_content_path, and extracted $data variables are all
         // available in the scope of the included Gabarit.php file.
-        include $this->sourceDir . '/view/Gabarit.php';
+        include $this->sourceDir . '/views/Gabarit.php';
     }
 }

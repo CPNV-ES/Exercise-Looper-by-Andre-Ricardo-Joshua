@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
 
 class HomeController
 {
@@ -9,7 +9,7 @@ class HomeController
      */
     public function index(): array
     {
-        return ['view' => 'view/Home',
+        return ['view' => 'views/Home',
                 'data' => [
                     'title' => 'Exercise Looper'
                 ]

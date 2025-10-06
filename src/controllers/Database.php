@@ -11,26 +11,25 @@ namespace App\Controllers;
 
 use PDO;
 use PDOException;
- 
+use SQLite3;
+
 class Database
 {
     private $userName;
     private $userPdw;
     private $dbIp;
     private $dbName;
+    private $db;
 
     public function __construct()
     {
-        // Database connection parameters
-        $this->userName = $_ENV['DB_USERNAME'];
-        $this->userPdw = $_ENV['DB_PASSWORD'];
-        $this->dbIp = $_ENV['DB_HOST'];
-        $this->dbName = $_ENV['DB_DATABASE'];
+        // Database connection link
+        $this->db = new SQLite3('../db/LooperDB.db');
     }
 
     function openDbConnection()
     {
-        $dbConn = null;
+        /*$dbConn = null;
 
         try {
             $dbConn = new PDO("mysql:host=$this->dbIp;dbname=$this->dbName", $this->userName, $this->userPdw);
@@ -38,17 +37,17 @@ class Database
             echo "Connection failed : " . $e->getMessage();
         }
         return $dbConn;
+        */
     }
 
     function executeQuery($query)
     {
         $queryResult = null;
 
-        $dbConn = $this->openDbConnection();
-        if($dbConn != null) {
-            $statement = $dbConn->prepare($query);
-            $statement->execute();
-            $queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);
+        //$dbConn = $this->openDbConnection();
+        if($this->db != null) {
+            $statement = $this->db->query($query);
+            $queryResult = $statement->fetchArray(SQLITE3_ASSOC);
         }
         return $queryResult;
     }

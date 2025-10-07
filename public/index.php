@@ -5,9 +5,7 @@ use App\Router;
 use App\Renderer;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+require_once dirname(__DIR__) . '/src/helpers.php';
 
 define('BASE_DIR', dirname( __FILE__ ).'/..');
 define('SOURCE_DIR', BASE_DIR.'/src');
@@ -27,14 +25,21 @@ $addRoutes($router);
 // Convert all errors, warnings and notices to exceptions
 set_error_handler(function ($severity, $message, $filename, $lineno) { throw new \ErrorException($message, 0, $severity, $filename, $lineno); });
 
-// Dispatch the request and handle any exceptions to prevent crashes.
+// Handle the entire request-response cycle in a try-catch block to prevent crashes.
 try {
+    // Dispatch the request to get rendering options.
     $rendering_options = $router->dispatch($route, $method);
-}
-catch (Exception $error) {
-    $rendering_options = ['status_code' => 500];
-}
 
-// Use the Renderer to display the appropriate view based on the router's response.
-$renderer = new Renderer(SOURCE_DIR);
-$renderer->render($rendering_options, $route);
+    // Use the Renderer to display the appropriate view.
+    $renderer = new Renderer(SOURCE_DIR);
+    $renderer->render($rendering_options, $route);
+}
+catch (Throwable $error) {
+    // Log the detailed error for the developer.
+    error_log('APP_LOGS: ' . $error);
+
+    // Prepare a generic 500 error response for the user.
+    http_response_code(500);
+    $renderer = new Renderer(SOURCE_DIR);
+    $renderer->render(['data' => ['title' => '500 Internal Server Error']], $route);
+}

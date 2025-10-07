@@ -30,17 +30,28 @@ class Router
     public function dispatch(string $route, string $method): array
     {
         foreach ($this->routes as $r) {
-            // A more advanced router would use regex here to support dynamic parameters.
-            if ($r['path'] === $route && $r['method'] === $method) { 
+            // Convert route path to a regex pattern
+            $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_]+)', $r['path']);
+            $pattern = '#^' . $pattern . '$#';
+
+            if (preg_match($pattern, $route, $matches) && $r['method'] === $method) {
                 // Validate that the handler is a valid [class, method] array.
                 if (!is_array($r['handler']) || count($r['handler']) !== 2 || !class_exists($r['handler'][0]) || !method_exists($r['handler'][0], $r['handler'][1])) {
                     throw new \Exception("Invalid handler for route: {$method} {$route}");
                 }
 
                 [$controllerClass, $controllerMethod] = $r['handler'];
+                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
 
                 $controller = new $controllerClass(/* In the future, dependencies would be injected here */);
-                return $controller->$controllerMethod();
+                $result = $controller->$controllerMethod(...$params);
+
+                if (isset($result['redirect'])) {
+                    header('Location: ' . $result['redirect']);
+                    exit();
+                }
+
+                return $result;
             }
         }
 

@@ -33,6 +33,7 @@ if (str_starts_with($route, '/exercises/new')) {
     <header class="heading <?= $headerClass ?>">
         <section class="container">
             <a href="/"><img src="/assets/logo.png"></a>
+            <span class="exercise-label"><?= $title ?? ''?></span>
         </section>
     </header>
     <?php endif; ?>

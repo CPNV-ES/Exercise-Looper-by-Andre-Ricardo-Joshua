@@ -11,45 +11,26 @@ namespace App\Controllers;
 
 use PDO;
 use PDOException;
- 
+
 class Database
 {
-    private $userName;
-    private $userPdw;
-    private $dbIp;
-    private $dbName;
+    private static ?PDO $instance = null;
 
-    public function __construct()
+    public static function getInstance(): PDO
     {
-        // Database connection parameters
-        $this->userName = $_ENV['DB_USERNAME'];
-        $this->userPdw = $_ENV['DB_PASSWORD'];
-        $this->dbIp = $_ENV['DB_HOST'];
-        $this->dbName = $_ENV['DB_DATABASE'];
-    }
+        if(self::$instance === null)
+        {
+            $dsn = 'sqlite:'.BASE_DIR.'/src/database/LooperDB.db';
 
-    function openDbConnection()
-    {
-        $dbConn = null;
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false
+            ];
 
-        try {
-            $dbConn = new PDO("mysql:host=$this->dbIp;dbname=$this->dbName", $this->userName, $this->userPdw);
-        } catch (PDOException $e) {
-            echo "Connection failed : " . $e->getMessage();
+            self::$instance = new PDO($dsn, null, null, $options);
         }
-        return $dbConn;
-    }
 
-    function executeQuery($query)
-    {
-        $queryResult = null;
-
-        $dbConn = $this->openDbConnection();
-        if($dbConn != null) {
-            $statement = $dbConn->prepare($query);
-            $statement->execute();
-            $queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);
-        }
-        return $queryResult;
+        return self::$instance;
     }
 }

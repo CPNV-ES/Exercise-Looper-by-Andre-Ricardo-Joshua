@@ -1,8 +1,8 @@
 <ul class="ansering-list">
-    <?php foreach ( $exercices as $exercice ) { ?>
+    <?php foreach ( $exercises as $exercise ) { ?>
     <li class="row">
       <div class="column card">
-        <div class="title"><?= $exercice->title ?></div>
+        <div class="title"><?= $exercise->title ?></div>
       </div>
     </li>
     <?php } ?>

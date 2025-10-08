@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\Exercice;
+use App\Models\Exercise;
 
 class ExerciseController
 {
@@ -13,7 +13,7 @@ class ExerciseController
     {
         // sample data. need to change to fetch from the DB.
 
-        $exercices = Exercice::getAllExercices();
+        $exercises = Exercise::getExercisesByStatus("Answering");
 
         /*$exercices = [
             ['id' => 45, 'title' => 'Le nouvel exo'],
@@ -25,7 +25,7 @@ class ExerciseController
             'view' => 'views/Exercises',
             'data' => [
                 'title' => 'Exercises',
-                'exercices' => $exercices
+                'exercises' => $exercises
             ]
         ];
     }

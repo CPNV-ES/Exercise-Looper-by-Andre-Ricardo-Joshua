@@ -30,4 +30,11 @@ class Exercice
         }
         return $return;
     }
+
+    public static function createExercice($title)
+    {
+        $db = new Database();
+
+        $db->executeQuery("INSERT INTO exercices (title) VALUES ('{$title}')");
+    }
 }

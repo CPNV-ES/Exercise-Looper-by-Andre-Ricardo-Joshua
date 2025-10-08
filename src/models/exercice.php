@@ -8,24 +8,26 @@ class Exercice
 {
     public $id;
     public $title;
+    public $status;
 
-    protected function __construct($id, $title)
+    protected function __construct($id, $title, $status)
     {
         $this->id = $id;
         $this->title = $title;
+        $this->status = $status;
     }
 
     public static function getAllExercices()
     {
         $db = new Database();
-        $results = $db->executeQuery("SELECT id, title FROM exercices");
+
+        $results = $db->executeQuery("SELECT id, title, status FROM exercices");
 
         $return = [];
 
         foreach ($results as $result) {
-            $return[] = new Exercice($result['id'], $result['title']);
+            $return[] = new Exercice($result['id'], $result['title'], $result['status']);
         }
-
         return $return;
     }
 }

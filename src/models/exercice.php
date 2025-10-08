@@ -67,4 +67,18 @@ class Exercice
 
         return $return;
     }
+
+    public static function updateExercice($fields, $id)
+    {
+        $db = new Database();
+
+        $querybuilder = '';
+
+        foreach ($fields as $field)
+        {
+            $querybuilder = "{fields[]} = {$field}";
+        }
+
+        $db->executeQuery("UPDATE exercices SET {$querybuilder} WHERE id = {$id}");
+    }
 }

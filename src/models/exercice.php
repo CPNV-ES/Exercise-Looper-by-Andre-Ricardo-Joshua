@@ -52,4 +52,19 @@ class Exercice
 
         return $return;
     }
+
+    public static function getExerciceById($id)
+    {
+        $db = new Database();
+
+        $results = $db->executeQuery("SELECT id, title, status FROM exercices WHERE id = {$id}");
+
+        $return = [];
+
+        foreach ($results as $result) {
+            $return[] = new Exercice($result['id'], $result['title'], $result['status']);
+        }
+
+        return $return;
+    }
 }

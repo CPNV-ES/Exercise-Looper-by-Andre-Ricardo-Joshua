@@ -11,33 +11,26 @@ namespace App\Controllers;
 
 use PDO;
 use PDOException;
-//use SQLite3;
 
 class Database
 {
-    private $db = SOURCE_DIR."/db/LooperDB.db";
-    private $pdo;
+    private static ?PDO $instance = null;
 
-    public function __construct()
+    public static function getInstance(): PDO
     {
-        // Database connection link
-        try {
-            $this->pdo = new PDO("sqlite:".$this->db);
-        } catch (PDOException $e) {
-            echo "Connection failed : " . $e->getMessage();
-        }
-        return $this->pdo;
-    }
+        if(self::$instance === null)
+        {
+            $dsn = 'sqlite:'.BASE_DIR.'/src/database/LooperDB.db';
 
-    public function executeQuery($query)
-    {
-        $queryResult = null;
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false
+            ];
 
-        if($this->pdo != null) {
-            $statement = $this->pdo->prepare($query);
-            $statement->execute();
-            $queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);
+            self::$instance = new PDO($dsn, null, null, $options);
         }
-        return $queryResult;
+
+        return self::$instance;
     }
 }

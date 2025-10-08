@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Controllers\Database;
+use PDO;
 
 class Exercise
 {
@@ -19,9 +20,9 @@ class Exercise
 
     public static function getAllExercises()
     {
-        $db = new Database();
+        $db = Database::getInstance();
 
-        $results = $db->executeQuery("SELECT id, title, status FROM exercises");
+        $results = Exercise::executeQuery($db, "SELECT id, title, status FROM exercises");
 
         $return = [];
 
@@ -31,18 +32,18 @@ class Exercise
         return $return;
     }
 
-    public static function createExercise($title)
+    public static function createExercise($title = '', $status = 'Building')
     {
-        $db = new Database();
+        $db = Database::getInstance();
 
-        $db->executeQuery("INSERT INTO exercises (title) VALUES ('{$title}')");
+        Exercise::executeQuery($db, "INSERT INTO exercises (title, status) VALUES ('{$title}', '{$status}')");
     }
 
     public static function getExercisesByStatus($status)
     {
-        $db = new Database();
+        $db = Database::getInstance();
 
-        $results = $db->executeQuery("SELECT id, title, status FROM exercises WHERE status = '{$status}'");
+        $results = Exercise::executeQuery($db, "SELECT id, title, status FROM exercises WHERE status = '{$status}'");
 
         $return = [];
 
@@ -55,9 +56,9 @@ class Exercise
 
     public static function getExerciseById($id)
     {
-        $db = new Database();
+        $db = Database::getInstance();
 
-        $results = $db->executeQuery("SELECT id, title, status FROM exercises WHERE id = {$id}");
+        $results = Exercise::executeQuery($db,"SELECT id, title, status FROM exercises WHERE id = {$id}");
 
         $return = [];
 
@@ -70,7 +71,7 @@ class Exercise
 
     public static function updateExercise($fields, $id)
     {
-        $db = new Database();
+        $db = Database::getInstance();
 
         $querybuilder = '';
 
@@ -79,6 +80,13 @@ class Exercise
             $querybuilder = "{fields[]} = {$field}";
         }
 
-        $db->executeQuery("UPDATE exercises SET {$querybuilder} WHERE id = {$id}");
+        Exercise::executeQuery($db,"UPDATE exercises SET {$querybuilder} WHERE id = {$id}");
+    }
+
+    //-------------------------------------------------------------------------------------------------------//
+
+    public static function executeQuery($db, $query)
+    {
+        return $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -37,4 +37,19 @@ class Exercice
 
         $db->executeQuery("INSERT INTO exercices (title) VALUES ('{$title}')");
     }
+
+    public static function getExercicesByStatus($status)
+    {
+        $db = new Database();
+
+        $results = $db->executeQuery("SELECT id, title, status FROM exercices WHERE status = {$status}");
+
+        $return = [];
+
+        foreach ($results as $result) {
+            $return[] = new Exercice($result['id'], $result['title'], $result['status']);
+        }
+
+        return $return;
+    }
 }

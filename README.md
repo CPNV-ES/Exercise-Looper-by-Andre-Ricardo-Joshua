@@ -3,11 +3,11 @@ MAW1.1 - Exercise Looper by Andre Ricardo Joshua
 
 ## Description
 
-This website is designed to create and manage exercices form.
+This website is designed to create and manage exercises form.
 The main features are :
-- Create an exercice form
-- Manage an existing exercice form
-- Take an existing exercice
+- Create an exercise form
+- Manage an existing exercise form
+- Take an existing exercise
 
 ## Getting Started
 
@@ -22,8 +22,13 @@ List all dependencies and their version needed by the project as :
 
 ### Configuration
 
-How to set up the database?
-How do you set the sensitive data?
+To configure the application, you'll need to set up your environment variables.
+
+1.  Copy the example environment file:
+    ```shell
+    cp .env.example .env
+    ```
+2.  Open the `.env` file and edit the database variables to match your local setup. You can choose between SQLite, MySQL, or MariaDB by uncommenting the appropriate section.
 
 ## Deployment
 

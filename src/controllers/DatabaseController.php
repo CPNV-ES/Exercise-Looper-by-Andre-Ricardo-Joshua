@@ -18,36 +18,41 @@ class DatabaseController
     public static function getInstance(): PDO
     {
         if (self::$instance === null) {
-            $dsn = 'sqlite:'.BASE_DIR.'/database/app.sqlite';
+            $driver = $_ENV['DB_CONNECTION'] ?? 'sqlite';
+            $host = $_ENV['DB_HOST'] ?? 'localhost';
+            $port = $_ENV['DB_PORT'] ?? '3306';
+            $db_name = $_ENV['DB_DATABASE'] ?? 'app';
+            $user = $_ENV['DB_USERNAME'] ?? 'root';
+            $pass = $_ENV['DB_PASSWORD'] ?? '';
+            $charset = $_ENV['DB_CHARSET'] ?? 'utf8mb4';
 
-            // Ensure the directory for the SQLite database exists before connecting.
-            self::ensureDirectoryExists($dsn);
+            if ($driver === 'sqlite') {
+                $dsn = 'sqlite:'.BASE_DIR.'/'.$db_name;
+                $user = null;
+                $pass = null;
+            } else {
+                $dsn = "{$driver}:host={$host};port={$port};dbname={$db_name};charset={$charset}";
+            }
 
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Throw exceptions on error
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false,
             ];
- 
-            self::$instance = new PDO($dsn, null, null, $options);
+
+            try {
+                self::$instance = new PDO($dsn, $user, $pass, $options);
+            } catch (PDOException $e) {
+                // Log the detailed, specific error for developers to see in the server logs.
+                error_log("Database connection failed: " . $e->getMessage());
+
+                // Throw a new, more generic exception to avoid leaking sensitive
+                // connection details to the user. This will be caught by the global
+                // error handler and result in a 500 error page.
+                throw new PDOException("Database connection failed. Check your configuration.", (int)$e->getCode(), $e);
+            }
         }
  
         return self::$instance;
-    }
-    
-    /**
-     * Ensures the directory for the SQLite database file exists.
-     *
-     * @param string $dsn The DSN string.
-     */
-    private static function ensureDirectoryExists(string $dsn): void
-    {
-        if (str_starts_with($dsn, 'sqlite:')) {
-            $dbPath = substr($dsn, 7); // Get the path part of the DSN
-            $dbDir = dirname($dbPath);
-            if (!is_dir($dbDir)) {
-                mkdir($dbDir, 0777, true); // Create the directory recursively
-            }
-        }
     }
 }

@@ -9,7 +9,7 @@ if (!defined('BASE_DIR')) {
     define('BASE_DIR', dirname(__DIR__));
 }
 
-// Load environment variables
+// Load environment variables from .env file
 $dotenv = Dotenv\Dotenv::createImmutable(BASE_DIR);
 $dotenv->load();
 
@@ -18,12 +18,32 @@ use App\Controllers\DatabaseController;
 echo "Seeding database..." . PHP_EOL;
 
 try {
+    $driver = $_ENV['DB_CONNECTION'] ?? 'sqlite';
+
+    // For SQLite, ensure the database directory exists before connecting.
+    if ($driver === 'sqlite') {
+        $dbPath = BASE_DIR . '/' . $_ENV['DB_DATABASE'];
+        $dbDir = dirname($dbPath);
+        if (!is_dir($dbDir)) {
+            mkdir($dbDir, 0777, true); // Create the directory recursively
+            echo "Created database directory: " . $dbDir . PHP_EOL;
+        }
+    }
+
     $pdo = DatabaseController::getInstance();
 
+    // Temporarily disable foreign key checks for MySQL/MariaDB to allow truncation.
+    if ($driver === 'mysql') {
+        $pdo->exec('SET FOREIGN_KEY_CHECKS=0;');
+        $pdo->exec('TRUNCATE TABLE fields;');
+        $pdo->exec('TRUNCATE TABLE exercises;');
+    } else {
+        // For SQLite, DELETE is sufficient.
+        $pdo->exec('DELETE FROM fields;');
+        $pdo->exec('DELETE FROM exercises;');
+    }
     // Clear existing data
-    $pdo->exec('DELETE FROM fields;');
-    $pdo->exec('DELETE FROM exercices;');
-    echo "Cleared existing data." . PHP_EOL;
+    echo "Cleared existing data from tables." . PHP_EOL;
 
     // Insert mock exercises
     $exercises = [
@@ -32,7 +52,7 @@ try {
         ['title' => 'New Project Kick-off', 'status' => 'building'],
     ];
 
-    $stmt = $pdo->prepare('INSERT INTO exercices (title, status) VALUES (?, ?)');
+    $stmt = $pdo->prepare('INSERT INTO exercises (title, status) VALUES (?, ?)');
     foreach ($exercises as $exercise) {
         $stmt->execute([$exercise['title'], $exercise['status']]);
     }
@@ -49,6 +69,11 @@ try {
         $stmt->execute([$field['label'], $field['value_kind'], $field['exercise_id']]);
     }
     echo "Inserted " . count($fields) . " fields." . PHP_EOL;
+
+    // Re-enable foreign key checks for MySQL/MariaDB
+    if ($driver === 'mysql') {
+        $pdo->exec('SET FOREIGN_KEY_CHECKS=1;');
+    }
 
     echo "Seeding completed successfully!" . PHP_EOL;
 

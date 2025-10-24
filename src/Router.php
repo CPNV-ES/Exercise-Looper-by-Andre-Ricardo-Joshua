@@ -29,6 +29,11 @@ class Router
      */
     public function dispatch(string $route, string $method): array
     {
+        // Handle method spoofing for PUT/DELETE
+        if ($method === 'POST' && isset($_POST['_method'])) {
+            $method = strtoupper($_POST['_method']);
+        }
+
         foreach ($this->routes as $r) {
             // Convert route path to a regex pattern
             $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_]+)', $r['path']);

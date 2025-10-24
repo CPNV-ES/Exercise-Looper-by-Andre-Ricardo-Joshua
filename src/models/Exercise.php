@@ -2,91 +2,52 @@
 
 namespace App\Models;
 
-use App\Controllers\Database;
-use PDO;
-
-class Exercise
+class Exercise extends BaseModel
 {
     public $id;
     public $title;
     public $status;
 
-    protected function __construct($id, $title, $status)
-    {
-        $this->id = $id;
-        $this->title = $title;
-        $this->status = $status;
-    }
-
     public static function getAllExercises()
     {
-        $db = Database::getInstance();
-
-        $results = Exercise::executeQuery($db, "SELECT id, title, status FROM exercises");
-
-        $return = [];
-
-        foreach ($results as $result) {
-            $return[] = new Exercise($result['id'], $result['title'], $result['status']);
-        }
-        return $return;
-    }
-
-    public static function createExercise($title = '', $status = 'Building')
-    {
-        $db = Database::getInstance();
-
-        Exercise::executeQuery($db, "INSERT INTO exercises (title, status) VALUES ('{$title}', '{$status}')");
+        $sql = "SELECT id, title, status FROM exercises";
+        return self::queryAndMap($sql);
     }
 
     public static function getExercisesByStatus($status)
     {
-        $db = Database::getInstance();
-
-        $results = Exercise::executeQuery($db, "SELECT id, title, status FROM exercises WHERE status = '{$status}'");
-
-        $return = [];
-
-        foreach ($results as $result) {
-            $return[] = new Exercise($result['id'], $result['title'], $result['status']);
-        }
-
-        return $return;
+        $sql = "SELECT id, title, status FROM exercises WHERE status = ?";
+        return self::queryAndMap($sql, [$status]);
     }
 
     public static function getExerciseById($id)
     {
-        $db = Database::getInstance();
+        $sql = "SELECT id, title, status FROM exercises WHERE id = ?";
+        return self::queryAndMap($sql, [$id], true);
+    }
 
-        $results = Exercise::executeQuery($db,"SELECT id, title, status FROM exercises WHERE id = {$id}");
-
-        $return = [];
-
-        foreach ($results as $result) {
-            $return[] = new Exercise($result['id'], $result['title'], $result['status']);
-        }
-
-        return $return;
+    public static function createExercise($title)
+    {
+        $sql = "INSERT INTO exercises (title) VALUES (?)";
+        self::executeQuery($sql, [$title]);
+        return self::getLastInsertId();
     }
 
     public static function updateExercise($fields, $id)
     {
-        $db = Database::getInstance();
-
-        $querybuilder = '';
-
-        foreach ($fields as $field)
-        {
-            $querybuilder = "{fields[]} = {$field}";
+        $setClauses = [];
+        $params = [];
+        foreach ($fields as $key => $value) {
+            $setClauses[] = "{$key} = ?";
+            $params[] = $value;
         }
 
-        Exercise::executeQuery($db,"UPDATE exercises SET {$querybuilder} WHERE id = {$id}");
-    }
+        if (empty($setClauses)) {
+            return; // Nothing to update
+        }
 
-    //-------------------------------------------------------------------------------------------------------//
-
-    public static function executeQuery($db, $query)
-    {
-        return $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+        $params[] = $id;
+        $query = "UPDATE exercises SET " . implode(', ', $setClauses) . " WHERE id = ?";
+        self::executeQuery($query, $params);
     }
 }

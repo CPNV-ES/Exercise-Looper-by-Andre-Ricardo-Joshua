@@ -1,6 +1,8 @@
 <?php
 $headerClass = '';
-if (str_starts_with($route, '/exercises/new')) {
+// Use regex to match dynamic routes for managing fields and editing them.
+// This makes the class assignment work for any exercise ID.
+if (str_starts_with($route, '/exercises/new') || preg_match('/^\/exercises\/\d+\/fields/', $route)) {
     $headerClass = 'creating';
 } elseif (str_starts_with($route, '/exercises/answering')) {
     $headerClass = 'answering';
@@ -16,6 +18,7 @@ if (str_starts_with($route, '/exercises/new')) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/solid.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/scaffold.css">

@@ -17,4 +17,9 @@ return function (Router $router) {
     $router->add('/exercises/{id}/fields/{field_id}', 'DELETE', [ExerciseController::class, 'deleteField']);
     $router->add('/exercises/{id}/fields/{field_id}/edit', 'GET', [ExerciseController::class, 'editField']);
     $router->add('/exercises/{id}/fields/{field_id}', 'PUT', [ExerciseController::class, 'updateField']);
+
+    $router->add('/exercises/{id}/fulfillments/new', 'GET', [ExerciseController::class, 'newFulfillment']);
+    $router->add('/exercises/{id}/fulfillments', 'POST', [ExerciseController::class, 'createFulfillment']);
+    $router->add('/exercises/{id}/fulfillments/{fulfillment_id}/edit', 'GET', [ExerciseController::class, 'editFulfillment']);
+    $router->add('/exercises/{id}/fulfillments/{fulfillment_id}', 'PUT', [ExerciseController::class, 'updateFulfillment']);
 };

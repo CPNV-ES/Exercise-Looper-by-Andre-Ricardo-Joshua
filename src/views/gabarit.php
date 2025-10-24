@@ -4,7 +4,7 @@ $headerClass = '';
 // This makes the class assignment work for any exercise ID.
 if (str_starts_with($route, '/exercises/new') || preg_match('/^\/exercises\/\d+\/fields/', $route)) {
     $headerClass = 'creating';
-} elseif (str_starts_with($route, '/exercises/answering')) {
+} elseif (str_starts_with($route, '/exercises/answering') || preg_match('/^\/exercises\/\d+\/fulfillments/', $route)) {
     $headerClass = 'answering';
 } elseif (str_starts_with($route, '/exercises')) {
     $headerClass = 'managing';
@@ -16,6 +16,7 @@ if (str_starts_with($route, '/exercises/new') || preg_match('/^\/exercises\/\d+\
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/fontawesome.min.css">

@@ -20,16 +20,6 @@ echo "Seeding database..." . PHP_EOL;
 try {
     $driver = $_ENV['DB_CONNECTION'] ?? 'sqlite';
 
-    // For SQLite, ensure the database directory exists before connecting.
-    if ($driver === 'sqlite') {
-        $dbPath = BASE_DIR . '/' . $_ENV['DB_DATABASE'];
-        $dbDir = dirname($dbPath);
-        if (!is_dir($dbDir)) {
-            mkdir($dbDir, 0777, true); // Create the directory recursively
-            echo "Created database directory: " . $dbDir . PHP_EOL;
-        }
-    }
-
     $pdo = DatabaseController::getInstance();
 
     // Temporarily disable foreign key checks for MySQL/MariaDB to allow truncation.

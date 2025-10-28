@@ -35,16 +35,18 @@ $is_editing = $fulfillment !== null;
                 case 'multi_line':
                 case 'single_line_list':
                     $placeholder = ($field->value_kind == 'single_line_list') ? 'Enter each item on a new line.' : '';
-                    ?>
+            ?>
                     <textarea name="answers[<?= $field->id ?>]" id="answer_<?= $field->id ?>" placeholder="<?= $placeholder ?>"><?= htmlspecialchars($answer_value) ?></textarea>
-                    <?php
+            <?php 
                     break;
                 case 'single_line':
                 default:
-                    ?>
+            ?>
                     <input type="text" name="answers[<?= $field->id ?>]" id="answer_<?= $field->id ?>" value="<?= htmlspecialchars($answer_value) ?>">
-                    <?php break;
-            } ?>
+            <?php 
+                    break;
+            } 
+            ?>
         </div>
     <?php endforeach; ?>
 

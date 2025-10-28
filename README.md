@@ -30,16 +30,26 @@ To configure the application, you'll need to set up your environment variables.
     ```
 2.  Open the `.env` file and edit the database variables to match your local setup. You can choose between SQLite, MySQL, or MariaDB by uncommenting the appropriate section.
 
-## Deployment
+### Installation & Setup
 
-### On dev environment
+After cloning the repository and configuring your `.env` file, run the following commands from the root of the project to get everything set up.
 
-How to get dependencies and build?
-How to run the tests?
-
-### On integration environment
-
-How to deploy the application outside the dev environment.
+1.  **Install PHP dependencies** using Composer:
+    ```shell
+    composer install
+    ```
+2.  **Update the autoloader** (optional, but good practice during development):
+    ```shell
+    composer dump-autoload
+    ```
+3.  **Run database migrations** to create the necessary tables:
+    ```shell
+    php database/migrate.php
+    ```
+4.  **(Optional) Seed the database** with initial mock data:
+    ```shell
+    php database/seed.php
+    ```
 
 ## Directory structure
 

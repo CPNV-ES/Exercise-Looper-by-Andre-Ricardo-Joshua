@@ -20,16 +20,6 @@ echo "Running migrations..." . PHP_EOL;
 try {
     $driver = $_ENV['DB_CONNECTION'] ?? 'sqlite';
 
-    // For SQLite, ensure the database directory exists before connecting.
-    if ($driver === 'sqlite') {
-        $dbPath = BASE_DIR . '/' . $_ENV['DB_DATABASE'];
-        $dbDir = dirname($dbPath);
-        if (!is_dir($dbDir)) {
-            mkdir($dbDir, 0777, true); // Create the directory recursively
-            echo "Created database directory: " . $dbDir . PHP_EOL;
-        }
-    }
-
     $pdo = DatabaseController::getInstance();
 
     // Temporarily disable foreign key checks for MySQL/MariaDB to avoid drop order issues.
@@ -38,6 +28,8 @@ try {
     }
 
     // Drop tables if they exist to start fresh
+    $pdo->exec('DROP TABLE IF EXISTS answers;');
+    $pdo->exec('DROP TABLE IF EXISTS fulfillments;');
     $pdo->exec('DROP TABLE IF EXISTS fields;');
     $pdo->exec('DROP TABLE IF EXISTS exercises;');
     echo "Dropped existing tables." . PHP_EOL;
@@ -60,6 +52,24 @@ try {
                 FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
             );
         ');
+        $pdo->exec('
+            CREATE TABLE fulfillments (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                exercise_id INT NOT NULL,
+                FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
+            );
+        ');
+        $pdo->exec('
+            CREATE TABLE answers (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                fulfillment_id INT NOT NULL,
+                field_id INT NOT NULL,
+                value TEXT,
+                FOREIGN KEY (fulfillment_id) REFERENCES fulfillments(id) ON DELETE CASCADE,
+                FOREIGN KEY (field_id) REFERENCES fields(id) ON DELETE CASCADE,
+                UNIQUE (fulfillment_id, field_id)
+            );
+        ');
     } else {
         // SQLite specific schema
         $pdo->exec('
@@ -78,10 +88,29 @@ try {
                 FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
             );
         ');
+        $pdo->exec('
+            CREATE TABLE fulfillments (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                exercise_id INTEGER NOT NULL,
+                FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
+            );
+        ');
+        $pdo->exec('
+            CREATE TABLE answers (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                fulfillment_id INTEGER NOT NULL,
+                field_id INTEGER NOT NULL,
+                value TEXT,
+                FOREIGN KEY (fulfillment_id) REFERENCES fulfillments(id) ON DELETE CASCADE,
+                FOREIGN KEY (field_id) REFERENCES fields(id) ON DELETE CASCADE,
+                UNIQUE (fulfillment_id, field_id)
+            );
+        ');
     }
 
     echo "Created 'exercises' table." . PHP_EOL;
     echo "Created 'fields' table." . PHP_EOL;
+    echo "Created 'fulfillments' and 'answers' tables." . PHP_EOL;
 
     // Re-enable foreign key checks for MySQL/MariaDB
     if ($driver === 'mysql') {

@@ -21,23 +21,17 @@
               <td><?= htmlspecialchars($field->value_kind) ?></td>
               <td>
                 <a title="Edit" href="/exercises/<?= $exerciseId ?>/fields/<?= $field->id ?>/edit"><i class="fa fa-edit"></i></a>
-                
-                <!-- Utilisation de js car trop casse tête de faire sans -->
                 <form id="delete-form-<?= $field->id ?>" action="/exercises/<?= $exerciseId ?>/fields/<?= $field->id ?>" method="POST" style="display: none;">
                     <input type="hidden" name="_method" value="DELETE">
                     <?= csrf_field() ?>
                 </form>
                 <a href="#" title="Destroy" onclick="if (confirm('Are you sure?')) { document.getElementById('delete-form-<?= $field->id ?>').submit(); } return false;"><i class="fa fa-trash"></i></a>
-                <!-- ------------------------------------------ -->
-
               </td>
             </tr>
           <?php endforeach; ?>
         <?php endif; ?>
       </tbody>
     </table>
-
-    <!-- Utilisation de js car trop casse tête de faire sans -->
     <form action="/exercises/<?= $exerciseId ?>" method="POST" onsubmit="return confirm('Are you sure? You won\'t be able to further edit this exercise');" style="display: inline;">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="exercise[status]" value="answering">
@@ -46,8 +40,6 @@
             <i class="fa fa-comment"></i> Complete and be ready for answers
         </button>
     </form>
-    <!-- ------------------------------------------ -->
-     
   </section>
   <section class="column">
     <h1>New Field</h1>

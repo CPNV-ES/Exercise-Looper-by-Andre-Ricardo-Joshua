@@ -7,8 +7,14 @@ use App\Renderer;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/src/helpers.php';
 
-define('BASE_DIR', dirname( __FILE__ ).'/..');
+if (!defined('BASE_DIR')) {
+    define('BASE_DIR', dirname(__DIR__));
+}
 define('SOURCE_DIR', BASE_DIR.'/src');
+
+// Load environment variables from .env file
+$dotenv = Dotenv\Dotenv::createImmutable(BASE_DIR);
+$dotenv->load();
 
 // Parse the requested URI and HTTP method from the server variables.
 $route = $_SERVER["REQUEST_URI"];

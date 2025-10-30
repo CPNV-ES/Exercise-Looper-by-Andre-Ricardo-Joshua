@@ -13,10 +13,8 @@ The main features are :
 
 ### Prerequisites
 
-List all dependencies and their version needed by the project as :
-
-* DataBase Engine (MySql, PostgreSQL, MSSQL,...)
-* IDE used : PhpStorm
+* PHP version 8.4.13
+* PHP extensions : pdo_sqlite
 * Package manager : Composer
 * OS supported : Windows, Debian & Ubuntu
 
@@ -53,35 +51,35 @@ After cloning the repository and configuring your `.env` file, run the following
 
 ## Directory structure
 
-* Tip: try the tree bash command
-
 ```shell
-├───Docs
-├───Shopping                                        //classes and packages
-│   ├───bin                                         //the binary to deploy on the end-user environment
-│   │   └───Debug
-│   └───obj
-│       └───Debug                                   
-└───TestShopping                                    //test classes
-    ├───bin
-    │   └───Debug
-    └───obj
-        └───Debug
+├── database
+│   ├── migrate.php
+│   └── seed.php
+├── public
+│   ├── assets
+│   ├── css
+│   └── index.php                                   // Starting point for the web app
+└── src
+    ├── ConfigRoutes.php                            // Configuration of new routes
+    ├── csrfToken.php
+    ├── Renderer.php
+    ├── Router.php
+    ├── controllers
+    │   ├── DatabaseController.php
+    │   ├── ExerciseController.php
+    │   └── HomeController.php
+    ├── models                                      // All models
+    │   ├── Answer.php
+    │   ├── BaseModel.php                           // Abstract class
+    │   └── ...
+    └── views
+        ├── errors                                  // Contain all errors views
+        ├── exercises
+        │   ├── answering-list.php
+        │   ├── edit-field.php
+        │   ├── fulfillment-form.php
+        │   ├── manage-fields.php
+        │   └── new.php
+        ├── gabarit.php
+        └── home.php
 ```
-
-## Collaborate
-
-* Take time to read some readme and find the way you would like to help other developers collaborate with you.
-
-* They need to know:
-    * How to propose a new feature (issue, pull request)
-    * [How to commit](https://www.conventionalcommits.org/en/v1.0.0/)
-    * [How to use your workflow](https://nvie.com/posts/a-successful-git-branching-model/)
-
-## License
-
-* [Choose the license adapted to your project](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
-
-## Contact
-
-* How to get in contact with you? Discord, Trello, Issue?

@@ -5,7 +5,7 @@ use App\Router;
 use App\Renderer;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
-require_once dirname(__DIR__) . '/src/helpers.php';
+require_once dirname(__DIR__) . '/src/csrfToken.php';
 
 if (!defined('BASE_DIR')) {
     define('BASE_DIR', dirname(__DIR__));

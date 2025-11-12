@@ -32,6 +32,7 @@
         <?php endif; ?>
       </tbody>
     </table>
+      <?php display_flash_messages(); ?>
     <form action="/exercises/<?= $exerciseId ?>" method="POST" onsubmit="return confirm('Are you sure? You won\'t be able to further edit this exercise');" style="display: inline;">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="exercise[status]" value="answering">

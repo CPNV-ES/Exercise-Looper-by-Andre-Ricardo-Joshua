@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Answer;
 use App\Models\Fulfillment;
 use App\Models\Exercise;
+use App\Models\Field;
 
 class ExerciseController
 {
@@ -91,6 +92,13 @@ class ExerciseController
         }
 
         $status = $_POST['exercise']['status'] ?? null;
+        if ($status === 'answering') {
+            $fields = Field::getByExerciseId($id);
+            if ($fields == null) {
+                $_SESSION['flash']['error'] = 'You need at least one field.';
+                return ['redirect' => "/exercises/$id/fields"];
+            }
+        }
         Exercise::update(['status' => $status], $id);
 
         return ['redirect' => '/exercises'];

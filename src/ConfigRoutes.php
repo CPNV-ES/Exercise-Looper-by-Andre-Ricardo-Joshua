@@ -24,4 +24,7 @@ return function (Router $router) {
     $router->add('/exercises/{id}/fulfillments', 'POST', [FulfillmentController::class, 'createFulfillment']);
     $router->add('/exercises/{id}/fulfillments/{fulfillment_id}/edit', 'GET', [FulfillmentController::class, 'editFulfillment']);
     $router->add('/exercises/{id}/fulfillments/{fulfillment_id}', 'PUT', [FulfillmentController::class, 'updateFulfillment']);
+
+    $router->add('/exercises', 'GET', [ExerciseController::class, 'getFilteredExercises']);
+    $router->add('/exercises/{id}', 'DELETE', [ExerciseController::class, 'deleteExercise']);
 };

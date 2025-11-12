@@ -24,6 +24,23 @@ class ExerciseController
         ];
     }
 
+    public function getFilteredExercises(): array
+    {
+        $exercisesBuilding = Exercise::getByStatus("building");
+        $exercisesAnswering = Exercise::getByStatus("answering");
+        $exercisesClosing = Exercise::getByStatus("closing");
+
+        return [
+            'view' => 'views/exercises/manage',
+            'data' => [
+                'title' => 'Exercises',
+                'exercisesBuilding' => $exercisesBuilding,
+                'exercisesAnswering' => $exercisesAnswering,
+                'exercisesClosing' => $exercisesClosing
+            ]
+        ];
+    }
+
     public function newExercise(): array
     {
         return [
@@ -52,6 +69,16 @@ class ExerciseController
         $exerciseId = Exercise::create($title);
 
         return ['redirect' => '/exercises/'.$exerciseId.'/fields'];
+    }
+
+    public function deleteExercise($id) : array
+    {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            return ['status_code' => 403, 'data' => ['title' => 'Forbidden']];
+        }
+
+        Exercise::delete($id);
+        return ['redirect' => "/exercises"];
     }
 
     public function changeExerciseStatus($id): array

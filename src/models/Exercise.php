@@ -33,6 +33,12 @@ class Exercise extends BaseModel
         return self::getLastInsertId();
     }
 
+    public static function delete($id)
+    {
+        $sql = "DELETE FROM exercises WHERE id = ?";
+        self::executeQuery($sql, [$id]);
+    }
+
     public static function update($fields, $id)
     {
         $setClauses = [];

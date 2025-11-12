@@ -64,8 +64,11 @@ class ExerciseController
             // Store an error message in the session to be displayed on the next page.
             $_SESSION['flash']['error'] = 'Title cannot be empty.';
             return ['redirect' => '/exercises/new'];
-        }
 
+        } else if (strlen($title) < 4) {
+            $_SESSION['flash']['error'] = 'Title must have at least 4 characters.';
+            return ['redirect' => '/exercises/new'];
+        }
         $exerciseId = Exercise::create($title);
 
         return ['redirect' => '/exercises/'.$exerciseId.'/fields'];

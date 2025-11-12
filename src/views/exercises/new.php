@@ -9,6 +9,6 @@
     <input type="text" minlength="4" name="exercise[title]" id="exercise_title" required>
   </div>
   <div class="actions">
-    <input type="submit" name="commit" value="Create Exercise" data-disable-with="Create Exercise">
+    <input type="submit" name="commit" value="Create Exercise" data-disable-with="Create Exercise" onclick="if(document.getElementById('exercise_title').value.trim().length < 4) { alert('Must have at least 4 characters'); return false; } ">
   </div>
 </form>

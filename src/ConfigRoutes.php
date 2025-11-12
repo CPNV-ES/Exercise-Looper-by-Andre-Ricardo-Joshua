@@ -9,12 +9,12 @@ use App\Router;
 return function (Router $router) {
     $router->add('/', 'GET', [HomeController::class, 'index']);
 
-    $router->add('/exercises/answering', 'GET', [ExerciseController::class, 'getAnsweringExercices']);
+    $router->add('/exercises/answering', 'GET', [ExerciseController::class, 'getAnsweringExercises']);
 
-    $router->add('/exercises/new', 'GET', [ExerciseController::class, 'new']);
-    $router->add('/exercises', 'POST', [ExerciseController::class, 'create']);
+    $router->add('/exercises/new', 'GET', [ExerciseController::class, 'newExercise']);
+    $router->add('/exercises', 'POST', [ExerciseController::class, 'createExercise']);
     $router->add('/exercises/{id}/fields', 'GET', [FieldController::class, 'manageFields']);
-    $router->add('/exercises/{id}', 'PUT', [ExerciseController::class, 'changeStatus']);
+    $router->add('/exercises/{id}', 'PUT', [ExerciseController::class, 'changeExerciseStatus']);
     $router->add('/exercises/{id}/fields', 'POST', [FieldController::class, 'createField']);
     $router->add('/exercises/{id}/fields/{field_id}', 'DELETE', [FieldController::class, 'deleteField']);
     $router->add('/exercises/{id}/fields/{field_id}/edit', 'GET', [FieldController::class, 'editField']);

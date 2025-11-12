@@ -11,9 +11,9 @@ class ExerciseController
     /**
      * Handles the logic for the exercises list page.
      */
-    public function getAnsweringExercices(): array
+    public function getAnsweringExercises(): array
     {
-        $exercises = Exercise::getExercisesByStatus("answering");
+        $exercises = Exercise::getByStatus("answering");
 
         return [
             'view' => 'views/exercises/answering-list',
@@ -24,7 +24,7 @@ class ExerciseController
         ];
     }
 
-    public function new(): array
+    public function newExercise(): array
     {
         return [
             'view' => 'views/exercises/new',
@@ -34,7 +34,7 @@ class ExerciseController
         ];
     }
 
-    public function create(): array
+    public function createExercise(): array
     {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             return ['status_code' => 403, 'data' => ['title' => 'Forbidden']];
@@ -49,20 +49,20 @@ class ExerciseController
             return ['redirect' => '/exercises/new'];
         }
 
-        $exerciseId = Exercise::createExercise($title);
+        $exerciseId = Exercise::create($title);
 
         return ['redirect' => '/exercises/'.$exerciseId.'/fields'];
     }
 
-    public function changeStatus(string $id): array
+    public function changeExerciseStatus($id): array
     {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             return ['status_code' => 403, 'data' => ['title' => 'Forbidden']];
         }
 
         $status = $_POST['exercise']['status'] ?? null;
-        Exercise::updateExercise(['status' => $status], $id);
+        Exercise::update(['status' => $status], $id);
 
-        return ['redirect' => '/'];
+        return ['redirect' => '/exercises'];
     }
 }

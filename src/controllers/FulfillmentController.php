@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Answer;
 use App\Models\Exercise;
 use App\Models\Fulfillment;
+use App\Models\Field;
 
 class FulfillmentController
 {
@@ -17,12 +18,12 @@ class FulfillmentController
      */
     public function newFulfillment(string $id): array
     {
-        $exercise = Exercise::getExerciseById($id);
+        $exercise = Exercise::getById($id);
         if (!$exercise) {
             return ['status_code' => 404, 'data' => ['title' => 'Not Found']];
         }
 
-        $fields = Field::getFieldsForExercise($id);
+        $fields = Field::getByExerciseId($id);
 
         return [
             'view' => 'views/exercises/fulfillment-form',
@@ -55,7 +56,7 @@ class FulfillmentController
         // Save the answers.
         $answers = $_POST['answers'] ?? [];
         foreach ($answers as $fieldId => $value) {
-            Answer::saveAnswer($fulfillmentId, (int)$fieldId, trim($value));
+            Answer::save($fulfillmentId, (int)$fieldId, trim($value));
         }
 
         $_SESSION['flash']['success'] = 'Your answers have been saved. You can come back to this page later to continue.';
@@ -73,14 +74,14 @@ class FulfillmentController
      */
     public function editFulfillment(string $id, string $fulfillment_id): array
     {
-        $exercise = Exercise::getExerciseById($id);
+        $exercise = Exercise::getById($id);
         $fulfillment = Fulfillment::find($fulfillment_id);
 
         if (!$exercise || !$fulfillment || $fulfillment->exercise_id != $id) {
             return ['status_code' => 404, 'data' => ['title' => 'Not Found']];
         }
 
-        $fields = Field::getFieldsForExercise($id);
+        $fields = Field::getByExerciseId($id);
         $answers = Fulfillment::getAnswersForFulfillment($fulfillment_id);
 
         return [
@@ -111,7 +112,7 @@ class FulfillmentController
         $answers = $_POST['answers'] ?? [];
         foreach ($answers as $fieldId => $value) {
             // Use an "upsert" logic to update existing answers or insert new ones.
-            Answer::saveAnswer((int)$fulfillment_id, (int)$fieldId, trim($value));
+            Answer::save((int)$fulfillment_id, (int)$fieldId, trim($value));
         }
 
         $_SESSION['flash']['success'] = 'Your answers have been updated.';

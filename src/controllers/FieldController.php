@@ -9,14 +9,14 @@ class FieldController
 {
     public function manageFields(string $id): array
     {
-        $exercise = Exercise::getExerciseById($id);
+        $exercise = Exercise::getById($id);
 
         if ($exercise === null) {
             // If no exercise is found for the given ID, return a 404 error.
             return ['status_code' => 404, 'data' => ['title' => 'Not Found']];
         }
 
-        $fields = Field::getFieldsForExercise($id);
+        $fields = Field::getByExerciseId($id);
 
         return [
             'view' => 'views/exercises/manage-fields',
@@ -43,7 +43,7 @@ class FieldController
             return ['redirect' => '/exercises/' . $id . '/fields'];
         }
 
-        Field::createField($label, $valueKind, $id);
+        Field::create($label, $valueKind, $id);
 
         return ['redirect' => '/exercises/' . $id . '/fields'];
     }

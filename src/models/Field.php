@@ -9,7 +9,7 @@ class Field extends BaseModel
     public $value_kind;
     public $exercise_id;
 
-    public static function getFieldsForExercise(int $exerciseId): array
+    public static function getByExerciseId(int $exerciseId): array
     {
         $sql = "SELECT id, label, value_kind, exercise_id FROM fields WHERE exercise_id = ?";
         return self::queryAndMap($sql, [$exerciseId]);
@@ -21,7 +21,7 @@ class Field extends BaseModel
         return self::queryAndMap($sql, [$fieldId], true);
     }
 
-    public static function createField(string $label, string $valueKind, int $exerciseId): int
+    public static function create(string $label, string $valueKind, int $exerciseId): int
     {
         $sql = "INSERT INTO fields (label, value_kind, exercise_id) VALUES (?, ?, ?)";
         self::executeQuery($sql, [$label, $valueKind, $exerciseId]);

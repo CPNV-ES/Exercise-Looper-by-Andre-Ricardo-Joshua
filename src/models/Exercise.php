@@ -8,32 +8,32 @@ class Exercise extends BaseModel
     public $title;
     public $status;
 
-    public static function getAllExercises()
+    public static function getAll()
     {
         $sql = "SELECT id, title, status FROM exercises";
         return self::queryAndMap($sql);
     }
 
-    public static function getExercisesByStatus($status)
+    public static function getByStatus($status)
     {
         $sql = "SELECT id, title, status FROM exercises WHERE status = ?";
         return self::queryAndMap($sql, [$status]);
     }
 
-    public static function getExerciseById($id)
+    public static function getById($id)
     {
         $sql = "SELECT id, title, status FROM exercises WHERE id = ?";
         return self::queryAndMap($sql, [$id], true);
     }
 
-    public static function createExercise($title)
+    public static function create($title)
     {
         $sql = "INSERT INTO exercises (title) VALUES (?)";
         self::executeQuery($sql, [$title]);
         return self::getLastInsertId();
     }
 
-    public static function updateExercise($fields, $id)
+    public static function update($fields, $id)
     {
         $setClauses = [];
         $params = [];

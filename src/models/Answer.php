@@ -13,7 +13,7 @@ class Answer extends BaseModel
      * @param string $value
      * @return void
      */
-    public static function saveAnswer(int $fulfillmentId, int $fieldId, string $value): void
+    public static function save(int $fulfillmentId, int $fieldId, string $value): void
     {
         // Using REPLACE INTO for SQLite, which is a convenient way to do an upsert.
         // For MySQL, you would use INSERT ... ON DUPLICATE KEY UPDATE.

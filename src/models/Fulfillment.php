@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use DateTime;
+
 class Fulfillment extends BaseModel
 {
     public int $id;
     public int $exercise_id;
+    public string $timestamp;
 
     /**
      * Finds a single fulfillment by its ID.
@@ -46,5 +49,11 @@ class Fulfillment extends BaseModel
 
         // The result is an array like [field_id => value, ...], which is perfect for the view.
         return $results ?: [];
+    }
+
+    public static function getFulfillmentsForExercise($exerciseId): ?Fulfillment
+    {
+        $sql = "SELECT id, timestamp FROM fulfillments WHERE exercise_id = ?";
+        return self::queryAndMap($sql, [$exerciseId], true);
     }
 }

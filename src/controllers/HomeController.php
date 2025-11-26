@@ -9,10 +9,11 @@ class HomeController
      */
     public function index(): array
     {
-        return ['view' => 'views/Home',
-                'data' => [
-                    'title' => 'Exercise Looper'
-                ]
+        return [
+            'view' => 'views/Home',
+            'data' => [
+                'title' => 'Exercise Looper'
+            ]
         ];
     }
 }

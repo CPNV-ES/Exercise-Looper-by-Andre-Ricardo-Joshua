@@ -48,13 +48,13 @@
           <tr>
             <td><?= $exercise->title ?></td>
             <td>
+                <a title="Show results" href="/exercises/<?= $exercise->id ?>/results"><i class="fa fa-chart-bar"></i></a>
                 <form id="close-form-<?= $exercise->id ?>" action="/exercises/<?= $exercise->id ?>" method="POST" onsubmit="return confirm('Are you sure? You won\'t be able to further edit this exercise');" style="display: inline;">
                     <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="exercise[status]" value="closing">
                     <?= csrf_field() ?>
                 </form>
                 <a href="#" title="Close" onclick="if (confirm('Are you sure?')) { document.getElementById('close-form-<?= $exercise->id ?>').submit(); } return false;"><i class="fa fa-minus-circle"></i></a>
-                <a title="Show results" href=""><i class="fa fa-chart-bar"></i></a>
             </td>
           </tr>
       <?php } ?>

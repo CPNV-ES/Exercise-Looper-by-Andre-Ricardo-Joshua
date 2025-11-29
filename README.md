@@ -62,6 +62,7 @@ After cloning the repository and configuring your `.env` file, run the following
 └── src
     ├── ConfigRoutes.php                            // Configuration of new routes
     ├── csrfToken.php
+    ├── flashMessages.php
     ├── Renderer.php
     ├── Router.php
     ├── controllers

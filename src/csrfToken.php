@@ -21,18 +21,3 @@ function csrf_field(): string
 {
     return '<input type="hidden" name="csrf_token" value="' . csrf_token() . '">';
 }
-
-/**
- * Displays and then clears flash messages from the session.
- */
-function display_flash_messages(): void
-{
-    if (isset($_SESSION['flash'])) {
-        foreach ($_SESSION['flash'] as $type => $message) {
-            // You can add styling for different message types (e.g., 'error', 'success')
-            echo '<div class="flash-message ' . htmlspecialchars($type) . '">' . htmlspecialchars($message) . '</div>';
-        }
-        // Unset the flash message so it doesn't show on subsequent page loads.
-        unset($_SESSION['flash']);
-    }
-}

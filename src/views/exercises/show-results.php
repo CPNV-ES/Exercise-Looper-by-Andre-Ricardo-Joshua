@@ -6,10 +6,9 @@
         </tr>
     </thead>
     <tbody>
-
     <?php foreach ($fulfillments as $fulfillment) { ?>
         <tr>
-            <td><a href="#"><?= $fulfillment->timestamp ?></a></td>
+            <td><a href="#"><?= $fulfillment ? $fulfillment->timestamp : null ?></a></td>
         </tr>
      <?php } ?>
     </tbody>

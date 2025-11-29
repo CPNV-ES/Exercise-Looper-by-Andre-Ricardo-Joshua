@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Controllers\DatabaseController;
 
+#[AllowDynamicProperties]
 abstract class BaseModel
 {
     /**

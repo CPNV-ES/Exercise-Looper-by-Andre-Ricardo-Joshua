@@ -27,12 +27,12 @@ class DatabaseController
             $charset = $_ENV['DB_CHARSET'] ?? 'utf8mb4';
 
             if ($driver === 'sqlite') {
-                // For SQLite, DB_DATABASE should be an absolute path.
-                // We ensure it's resolved relative to the project root if it's not absolute.
-                $dbPath = $db_name;
-                // A simple check for absolute paths on Windows (C:\) or Linux (/).
-                if ($dbPath[0] !== '/' && !preg_match('/^[a-zA-Z]:\\\\/', $dbPath)) {
-                    $dbPath = BASE_DIR . '/' . $dbPath;
+                $dbPath = BASE_DIR . '/' . $db_name;
+                $dbDir = dirname($dbPath);
+
+                // Ensure the directory exists.
+                if (!is_dir($dbDir)) {
+                    mkdir($dbDir, 0755, true);
                 }
                 $dsn = 'sqlite:' . $dbPath;
                 $user = null;

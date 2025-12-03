@@ -124,3 +124,15 @@ header.heading .exercise-label a:hover {
 dl.answer dt {
   font-weight: bold;
 }
+
+.display-buttons-column{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0px;
+}
+
+.a-ajusted-size{
+    width: fit-content;
+    height: 20px;
+}

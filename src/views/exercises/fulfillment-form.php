@@ -51,6 +51,7 @@ $is_editing = $fulfillment !== null;
     <?php endforeach; ?>
 
     <div class="actions">
+        <?php display_flash_messages(); ?>
         <input type="submit" value="Save">
     </div>
 </form>

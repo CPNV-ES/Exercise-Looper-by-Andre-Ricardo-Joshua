@@ -48,5 +48,5 @@ catch (Throwable $error) {
     // Prepare a generic 500 error response for the user.
     http_response_code(500);
     $renderer = new Renderer(SOURCE_DIR);
-    $renderer->render(['data' => ['title' => '500 Internal Server Error']], $route);
+    $renderer->render(['status_code' => 500, 'data' => ['title' => '500 Internal Server Error']], $route);
 }

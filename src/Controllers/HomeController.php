@@ -10,7 +10,7 @@ class HomeController
     public function index(): array
     {
         return [
-            'view' => 'views/Home',
+            'view' => 'views/home',
             'data' => [
                 'title' => 'Exercise Looper'
             ]

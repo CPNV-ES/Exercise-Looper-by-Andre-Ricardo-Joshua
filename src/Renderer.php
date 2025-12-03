@@ -48,7 +48,7 @@ class Renderer
         }
 
         // The $route, $view_content_path, and extracted $data variables are all
-        // available in the scope of the included Gabarit.php file.
-        include $this->sourceDir . '/views/Gabarit.php';
+        // available in the scope of the included gabarit.php file.
+        include $this->sourceDir . '/views/gabarit.php';
     }
 }

@@ -76,13 +76,13 @@
         <?php foreach ( $exercisesClosing as $exercise ) { ?>
           <tr>
             <td><?= $exercise->title ?></td>
-            <td>
-                <a title="Show results" href="/exercises/22/results"><i class="fa fa-chart-bar"></i></a>
+            <td class="display-buttons-column">
+                <a class="a-ajusted-size" title="Show results" href="/exercises/22/results"><i class="fa fa-chart-bar"></i></a>
                 <form id="delete-form-closed-<?= $exercise->id ?>" action="/exercises/<?= $exercise->id ?>" method="POST" style="display: none;">
                     <input type="hidden" name="_method" value="DELETE">
                     <?= csrf_field() ?>
                 </form>
-                <a href="#" title="Destroy" onclick="if (confirm('Are you sure?')) { document.getElementById('delete-form-closed-<?= $exercise->id ?>').submit(); } return false;"><i class="fa fa-trash"></i></a>
+                <a class="a-ajusted-size" href="#" title="Destroy" onclick="if (confirm('Are you sure?')) { document.getElementById('delete-form-closed-<?= $exercise->id ?>').submit(); } return false;"><i class="fa fa-trash"></i></a>
             </td>
           </tr>
         <?php } ?>

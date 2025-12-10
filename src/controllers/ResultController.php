@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use App\Models\Exercise;
 use App\Models\Field;
 use App\Models\Fulfillment;
 
@@ -11,6 +12,7 @@ class ResultController
     {
         $fulfillments = Fulfillment::getFulfillmentsForExercise($id);
         $fields = Field::getByExerciseId($id);
+        $exercise = Exercise::getById($id);
         $answers = Fulfillment::getAllAnswersForFulfillment($fulfillments);
 
         if (!$fulfillments) {
@@ -22,7 +24,9 @@ class ResultController
             'data' => [
                 'fulfillments' => $fulfillments,
                 'answers' => $answers,
-                'fields' => $fields
+                'fields' => $fields,
+                'title' => 'Exercise: <b>' . $exercise->title . '</b>',
+                'exercise' => $exercise
             ]
         ];
     }

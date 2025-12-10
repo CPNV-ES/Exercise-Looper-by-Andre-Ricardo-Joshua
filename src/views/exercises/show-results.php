@@ -3,7 +3,7 @@
         <tr>
             <th>Take</th>
             <?php foreach($fields as $field){ ?>
-            <th><a href="#"><?= $field->label ?></a></th>
+            <th><a href="/exercises/<?= $exercise->id ?>/results/<?= $field->id ?>"><?= $field->label ?></a></th>
             <?php } ?>
         </tr>
     </thead>

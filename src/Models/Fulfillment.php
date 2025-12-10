@@ -39,14 +39,48 @@ class Fulfillment extends BaseModel
      */
     public static function getAnswersForFulfillment($fulfillmentId): array
     {
+
         $stmt = static::executeQuery(
             'SELECT field_id, value FROM answers WHERE fulfillment_id = ?',
             [$fulfillmentId]
         );
+
         $results = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
 
         // The result is an array like [field_id => value, ...], which is perfect for the view.
         return $results ?: [];
+    }
+
+    public static function getAllAnswersForFulfillment($fulfillmentArray): array
+    {
+        $arrayIds = null;
+
+        foreach ($fulfillmentArray as $fulfillment => $element) {
+
+            if($element == end($fulfillmentArray)) {
+                $arrayIds .= $element->id;
+            } else {
+                $arrayIds .= $element->id . ", ";
+            }
+        }
+
+        $stmt = static::executeQuery(
+            "SELECT field_id, fulfillment_id, value FROM answers WHERE fulfillment_id IN ($arrayIds)"
+        );
+
+        $results = [];
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $fulfillmentId = $row['fulfillment_id'];
+            $fieldId = $row['field_id'];
+            $value = $row['value'];
+
+            // Structure the output as [fulfillment_id => [field_id => value, ...], ...]
+            $results[$fulfillmentId][$fieldId] = $value;
+        }
+
+        // The result is an array like [field_id => value, ...], which is perfect for the view.
+        return $results;
     }
 
     public static function getFulfillmentsForExercise($exerciseId)

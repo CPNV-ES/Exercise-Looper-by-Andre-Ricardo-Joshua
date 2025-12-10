@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Exercise;
+use App\Models\Field;
 use App\Models\Fulfillment;
 
 class ResultController
@@ -9,6 +11,9 @@ class ResultController
     public function showResults($id): array
     {
         $fulfillments = Fulfillment::getFulfillmentsForExercise($id);
+        $fields = Field::getByExerciseId($id);
+        $exercise = Exercise::getById($id);
+        $answers = Fulfillment::getAllAnswersForFulfillment($fulfillments);
 
         if (!$fulfillments) {
             return ['status_code' => 404, 'data' => ['title' => 'Not Found']];
@@ -17,7 +22,11 @@ class ResultController
         return [
             'view' => "views/exercises/show-results",
             'data' => [
-                'fulfillments' => $fulfillments
+                'fulfillments' => $fulfillments,
+                'answers' => $answers,
+                'fields' => $fields,
+                'title' => 'Exercise: <b>' . $exercise->title . '</b>',
+                'exercise' => $exercise
             ]
         ];
     }

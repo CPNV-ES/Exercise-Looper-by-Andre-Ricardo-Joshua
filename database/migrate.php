@@ -56,7 +56,7 @@ try {
             CREATE TABLE fulfillments (
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 exercise_id INT NOT NULL,
-                timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
             );
         ');
@@ -93,7 +93,7 @@ try {
             CREATE TABLE fulfillments (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 exercise_id INTEGER NOT NULL,
-                timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
             );
         ');

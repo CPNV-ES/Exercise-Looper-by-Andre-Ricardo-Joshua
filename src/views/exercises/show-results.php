@@ -10,7 +10,7 @@
     <tbody>
     <?php foreach ($fulfillments as $fulfillment) { ?>
         <tr>
-            <td><a href="#"><?= $fulfillment ? $fulfillment->timestamp : null ?></a></td>
+            <td><a href="/exercises/<?= $exercise->id ?>/fulfillments/<?= $fulfillment->id ?>"><?= $fulfillment ? $fulfillment->timestamp . " UTC" : null ?></a></td>
             <?php foreach ($answers[$fulfillment->id] as $answer) { ?>
                 <td class="answer">
                 <?php

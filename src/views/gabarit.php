@@ -4,7 +4,7 @@ $headerClass = '';
 // This makes the class assignment work for any exercise ID.
 if (str_starts_with($route, '/exercises/new') || preg_match('/^\/exercises\/\d+\/fields/', $route)) {
     $headerClass = 'creating';
-} elseif (str_starts_with($route, '/exercises/answering') || preg_match('/^\/exercises\/\d+\/fulfillments/', $route)) {
+} elseif (str_starts_with($route, '/exercises/answering') || (preg_match('/^\/exercises\/\d+\/fulfillments\/[a-zA-Z]+/', $route) || preg_match('/^\/exercises\/\d+\/fulfillments\/\d+\/[a-zA-Z]+/', $route))) {
     $headerClass = 'answering';
 } elseif (str_starts_with($route, '/exercises')) {
     $headerClass = 'managing';

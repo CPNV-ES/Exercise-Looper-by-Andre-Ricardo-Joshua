@@ -77,7 +77,7 @@
           <tr>
             <td><?= $exercise->title ?></td>
             <td class="display-buttons-column">
-                <a class="a-ajusted-size" title="Show results" href="/exercises/22/results"><i class="fa fa-chart-bar"></i></a>
+                <a class="a-ajusted-size" title="Show results" href="/exercises/<?= $exercise->id ?>/results"><i class="fa fa-chart-bar"></i></a>
                 <form id="delete-form-closed-<?= $exercise->id ?>" action="/exercises/<?= $exercise->id ?>" method="POST" style="display: none;">
                     <input type="hidden" name="_method" value="DELETE">
                     <?= csrf_field() ?>

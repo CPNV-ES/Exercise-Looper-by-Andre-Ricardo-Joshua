@@ -30,4 +30,29 @@ class ResultController
             ]
         ];
     }
+
+    public function showResultDetail($id, $result_id): array
+    {
+        $fulfillment = Fulfillment::find($result_id);
+        $fields = Field::getByExerciseId($id);
+        $exercise = Exercise::getById($id);
+        $answersForFulfillment = Fulfillment::getAnswersForFulfillment($result_id);
+        $answers = [$result_id => $answersForFulfillment ?: []];
+
+        if (!$fulfillment) {
+            return ['status_code' => 404, 'data' => ['title' => 'Not Found']];
+        }
+
+        return [
+            'view' => "views/exercises/show-result-detail",
+            'data' => [
+                'fulfillments' => [$fulfillment],
+                'answers' => $answers,
+                'fields' => $fields,
+                'title' => 'Exercise: <b>' . $exercise->title . '</b>',
+                'exercise' => $exercise
+            ]
+        ];
+    }
+
 }

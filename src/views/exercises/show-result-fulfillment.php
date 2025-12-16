@@ -1,5 +1,7 @@
-<h1></h1>
+<h1><?= $titleExercice ?></h1>
 <dl>
-    <dt></dt>
-    <dd></dd>
+    <?php for ($i = 0; $i < count($fields); $i++) { ?>
+    <dt><b><?= $fields[$i]->label ?></b></dt>
+    <dd><?= $answers[$i + 1] ?></dd>
+    <?php } ?>
 </dl>

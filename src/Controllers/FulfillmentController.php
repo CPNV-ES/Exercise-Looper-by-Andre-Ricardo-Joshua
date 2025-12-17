@@ -120,4 +120,21 @@ class FulfillmentController
         // Redirect back to the edit page.
         return ['redirect' => "/exercises/{$id}/fulfillments/{$fulfillment_id}/edit"];
     }
+
+    public function getAnswersFulfillment($id, $fulfillment_id): array
+    {
+        $title = Exercise::getById($id)->title;
+        $fields = Field::getByExerciseId($id);
+        $answers = Fulfillment::getAnswersForFulfillment($fulfillment_id);
+
+        return [
+            'view' => 'views/exercises/show-result-fulfillment',
+            'data' => [
+                'title' => "Exercice: <b>" . $title . "</b>",
+                'titleExercice' => $title,
+                'answers' => $answers,
+                'fields' => $fields
+            ]
+        ];
+    }
 }

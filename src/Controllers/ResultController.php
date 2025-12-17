@@ -33,25 +33,21 @@ class ResultController
 
     public function showResultDetail($id, $result_id): array
     {
-        $fulfillment = Fulfillment::find($result_id);
-        $fields = Field::getByExerciseId($id);
+        $fulfillments = Fulfillment::getFulfillmentsForExercise($id);
+        $fields = Field::getLabelExerciseID($id, $result_id);
         $exercise = Exercise::getById($id);
-        $field = $fields[0] ?? null;
+        $answers = Fulfillment::getAnswersForFulfillment($result_id);
 
-        $answersForFulfillment = Fulfillment::getAnswersForFulfillment($result_id);
-        $answers = [$result_id => $answersForFulfillment ?: []];
-
-        if (!$fulfillment) {
+        if (!$fulfillments) {
             return ['status_code' => 404, 'data' => ['title' => 'Not Found']];
         }
 
         return [
             'view' => "views/exercises/show-result-detail",
             'data' => [
-                'fulfillments' => [$fulfillment],
+                'fulfillments' => $fulfillments,
                 'answers' => $answers,
                 'fields' => $fields,
-                'field' => $field,
                 'title' => 'Exercise: <b>' . $exercise->title . '</b>',
                 'exercise' => $exercise
             ]

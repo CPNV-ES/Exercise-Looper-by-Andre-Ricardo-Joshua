@@ -17,7 +17,7 @@
                     if (isset($answers[$fulfillment->id])) {
                         echo nl2br(htmlspecialchars($answers[$fulfillment->id]));
                     } else {
-                        echo "<font color=\"red\">No answer provided</font>";
+                        echo "<font color=\"#FFB266\">No answer provided</font>";
                     }
                 ?>
             </td>

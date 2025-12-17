@@ -47,7 +47,21 @@ class Fulfillment extends BaseModel
 
         $results = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
 
-        // The result is an array like [field_id => value, ...], which is perfect for the view.
+        // The result is an array like [field_id => value, ...]
+        return $results ?: [];
+    }
+
+    public static function getAnswersForField($fieldId): array
+    {
+
+        $stmt = static::executeQuery(
+            'SELECT fulfillment_id, value FROM answers WHERE field_id = ?',
+            [$fieldId]
+        );
+
+        $results = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
+
+        // The result is an array like [fulfillment_id => value, ...]
         return $results ?: [];
     }
 

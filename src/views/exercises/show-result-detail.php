@@ -1,4 +1,4 @@
-<h1><?= $fields->label ?></h1>
+<h1><?= $field->label ?></h1>
 <table>
     <thead>
         <tr>
@@ -17,7 +17,7 @@
                     if (isset($answers[$fulfillment->id])) {
                         echo nl2br(htmlspecialchars($answers[$fulfillment->id]));
                     } else {
-                        echo "No answer provided";
+                        echo "<font color=\"red\">No answer provided</font>";
                     }
                 ?>
             </td>
@@ -25,10 +25,3 @@
         <?php } ?>
     </tbody>
 </table>
-
-<?php 
-// Debug
-// var_dump($fulfillments);
-// var_dump($answers);
-// var_dump($fields);
-?>

@@ -1,4 +1,4 @@
-<h1><?= htmlspecialchars($exercise->title ?? 'Result') ?></h1>
+<h1><?= htmlspecialchars($field->label) ?></h1>
 
 <table>
     <thead>

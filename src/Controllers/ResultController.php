@@ -36,6 +36,8 @@ class ResultController
         $fulfillment = Fulfillment::find($result_id);
         $fields = Field::getByExerciseId($id);
         $exercise = Exercise::getById($id);
+        $field = $fields[0] ?? null;
+
         $answersForFulfillment = Fulfillment::getAnswersForFulfillment($result_id);
         $answers = [$result_id => $answersForFulfillment ?: []];
 
@@ -49,6 +51,7 @@ class ResultController
                 'fulfillments' => [$fulfillment],
                 'answers' => $answers,
                 'fields' => $fields,
+                'field' => $field,
                 'title' => 'Exercise: <b>' . $exercise->title . '</b>',
                 'exercise' => $exercise
             ]

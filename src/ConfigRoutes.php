@@ -28,6 +28,7 @@ return function (Router $router) {
     $router->add('/exercises/{id}/fulfillments/{fulfillment_id}', 'GET', [FulfillmentController::class, 'getAnswersFulfillment']);
 
     $router->add('/exercises/{id}/results', 'GET', [ResultController::class, 'showResults']);
+    $router->add('/exercises/{id}/results/{result_id}', 'GET', [ResultController::class, 'showResultDetail']);
 
     $router->add('/exercises', 'GET', [ExerciseController::class, 'getFilteredExercises']);
     $router->add('/exercises/{id}', 'DELETE', [ExerciseController::class, 'deleteExercise']);

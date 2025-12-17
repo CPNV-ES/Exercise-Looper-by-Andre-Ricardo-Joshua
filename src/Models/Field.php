@@ -15,6 +15,12 @@ class Field extends BaseModel
         return self::queryAndMap($sql, [$exerciseId]);
     }
 
+    public static function getLabelExerciseID(int $exerciseId, int $fieldId)
+    {
+        $sql = "SELECT id, label, exercise_id FROM fields WHERE exercise_id = ? AND id = ?";
+        return self::queryAndMap($sql, [$exerciseId, $fieldId], true);
+    }
+
     public static function find(int $fieldId): ?Field
     {
         $sql = "SELECT id, label, value_kind, exercise_id FROM fields WHERE id = ?";

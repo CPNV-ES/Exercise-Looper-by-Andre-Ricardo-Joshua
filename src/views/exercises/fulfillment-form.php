@@ -1,16 +1,6 @@
-<?php
-/**
- * @var \App\Models\Exercise $exercise The exercise being taken.
- * @var \App\Models\Field[] $fields The fields of the exercise.
- * @var \App\Models\Fulfillment|null $fulfillment The fulfillment being edited, or null for a new one.
- * @var array $answers An array of answers for the fulfillment, indexed by field_id.
- * @var string $form_action The URL to submit the form to.
- */
+<?php $is_editing = $fulfillment !== null; ?>
 
-$is_editing = $fulfillment !== null;
-?>
-
-<h1><?= htmlspecialchars($title) ?></h1>
+<h1>Your Take</h1>
 
 <?php if ($is_editing): ?>
     <p>Bookmark this page, it's yours. You'll be able to come back later to finish.</p>

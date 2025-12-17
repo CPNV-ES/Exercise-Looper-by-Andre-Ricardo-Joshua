@@ -28,7 +28,7 @@ class FulfillmentController
         return [
             'view' => 'views/exercises/fulfillment-form',
             'data' => [
-                'title' => 'Your take on: ' . htmlspecialchars($exercise->title),
+                'title' => 'Exercise: ' . '<strong>' . htmlspecialchars($exercise->title) . '</strong>',
                 'exercise' => $exercise,
                 'fields' => $fields,
                 'fulfillment' => null, // No fulfillment yet

@@ -23,7 +23,7 @@ if (str_starts_with($route, '/exercises/new') || preg_match('/^\/exercises\/\d+\
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/solid.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/scaffold.css">
-    <title><?= $title ?? 'Exercise Looper' ?></title>
+    <title>Exercise Looper</title>
 </head>
 <body>
     <?php if ($route === '/'): ?>

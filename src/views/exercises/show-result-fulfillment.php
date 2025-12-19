@@ -2,6 +2,6 @@
 <dl>
     <?php for ($i = 0; $i < count($fields); $i++) { ?>
     <dt><b><?= $fields[$i]->label ?></b></dt>
-    <dd><?= $answers[$i + 1] ?></dd>
+    <dd><?= $answers[$i + 1] ?? ''  ?></dd>
     <?php } ?>
 </dl>

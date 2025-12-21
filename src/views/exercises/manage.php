@@ -19,7 +19,9 @@
                     <input type="hidden" name="exercise[status]" value="answering">
                     <?= csrf_field() ?>
                 </form>
-                <a href="#" title="Answer" onclick="if (confirm('Are you sure?')) { document.getElementById('answer-form-<?= $exercise->id ?>').submit(); } return false;"><i class="fa fa-comment icons"></i></a>
+                <?php if($exercise->haveFields == 1) { ?>
+                    <a href="#" title="Answer" onclick="if (confirm('Are you sure?')) { document.getElementById('answer-form-<?= $exercise->id ?>').submit(); } return false;"><i class="fa fa-comment icons"></i></a>
+                <?php } ?>
                 <a title="Manage fields" href="/exercises/<?= $exercise->id ?>/fields"><i class="fa fa-edit"></i></a>
                 <form id="delete-form-building-<?= $exercise->id ?>" action="/exercises/<?= $exercise->id ?>" method="POST" style="display: none;">
                     <input type="hidden" name="_method" value="DELETE">

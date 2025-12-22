@@ -16,7 +16,12 @@ class ResultController
         $answers = Fulfillment::getAllAnswersForFulfillment($fulfillments);
 
         if (!$fulfillments) {
-            return ['status_code' => 404, 'data' => ['title' => 'Not Found']];
+            return [
+                'view' => "views/errors/empty-results", 
+                'data' => [
+                    'title' => 'Exercise: <a href="/exercises/' . $exercise->id . '/results"><b>' . $exercise->title . '</b></a>'
+                    ]
+                ];
         }
 
         return [

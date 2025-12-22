@@ -7,6 +7,7 @@ class Exercise extends BaseModel
     public $id;
     public $title;
     public $status;
+    public $haveFields;
 
     public static function getAll()
     {
@@ -17,6 +18,14 @@ class Exercise extends BaseModel
     public static function getByStatus($status)
     {
         $sql = "SELECT id, title, status FROM exercises WHERE status = ?";
+        return self::queryAndMap($sql, [$status]);
+    }
+
+    public static function getByStatusWithFields($status)
+    {
+        $sql = "SELECT e.id, e.title, e.status, CASE WHEN f.exercise_id = e.id THEN 1 ELSE 0 END AS 'haveFields' FROM exercises e
+                LEFT JOIN fields f ON f.exercise_id = e.id
+                WHERE e.status = ?";
         return self::queryAndMap($sql, [$status]);
     }
 

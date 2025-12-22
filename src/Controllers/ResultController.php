@@ -25,7 +25,7 @@ class ResultController
                 'fulfillments' => $fulfillments,
                 'answers' => $answers,
                 'fields' => $fields,
-                'title' => 'Exercise: <b>' . $exercise->title . '</b>',
+                'title' => 'Exercise: <a href="/exercises/' . $exercise->id . '/results"><b>' . $exercise->title . '</b></a>',
                 'exercise' => $exercise
             ]
         ];
@@ -48,7 +48,7 @@ class ResultController
                 'fulfillments' => $fulfillments,
                 'answers' => $answers,
                 'field' => $field,
-                'title' => 'Exercise: <b>' . $exercise->title . '</b>',
+                'title' => 'Exercise: <a href="/exercises/' . $exercise->id . '/results"><b>' . $exercise->title . '</b></a>',
                 'exercise' => $exercise
             ]
         ];

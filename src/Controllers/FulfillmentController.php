@@ -130,7 +130,7 @@ class FulfillmentController
         return [
             'view' => 'views/exercises/show-result-fulfillment',
             'data' => [
-                'title' => "Exercice: <b>" . $title . "</b>",
+                'title' => 'Exercise: <a href="/exercises/' . $id . '/results"><b>' . $title . '</b></a>',
                 'titleExercice' => $title,
                 'answers' => $answers,
                 'fields' => $fields

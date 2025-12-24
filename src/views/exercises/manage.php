@@ -19,7 +19,7 @@
                     <input type="hidden" name="exercise[status]" value="answering">
                     <?= csrf_field() ?>
                 </form>
-                <?php if($exercise->haveFields == 1) { ?>
+                <?php if($exercise->haveFields >= 1) { ?>
                     <a href="#" title="Answer" onclick="if (confirm('Are you sure?')) { document.getElementById('answer-form-<?= $exercise->id ?>').submit(); } return false;"><i class="fa fa-comment icons"></i></a>
                 <?php } ?>
                 <a title="Manage fields" href="/exercises/<?= $exercise->id ?>/fields"><i class="fa fa-edit"></i></a>

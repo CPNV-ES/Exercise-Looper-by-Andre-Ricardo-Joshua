@@ -27,7 +27,7 @@ class ExerciseController
 
     public function getFilteredExercises(): array
     {
-        $exercisesBuilding = Exercise::getByStatusWithFields("building");
+        $exercisesBuilding = Exercise::getExercisesWithStatusAndFieldCount("building");
         $exercisesAnswering = Exercise::getByStatus("answering");
         $exercisesClosing = Exercise::getByStatus("closing");
 

@@ -21,11 +21,13 @@ class Exercise extends BaseModel
         return self::queryAndMap($sql, [$status]);
     }
 
-    public static function getByStatusWithFields($status)
+    public static function getExercisesWithStatusAndFieldCount($status)
     {
-        $sql = "SELECT e.id, e.title, e.status, CASE WHEN f.exercise_id = e.id THEN 1 ELSE 0 END AS 'haveFields' FROM exercises e
+        $sql = "SELECT e.id, e.title, e.status, COUNT(f.id) AS 'haveFields'
+                FROM exercises e
                 LEFT JOIN fields f ON f.exercise_id = e.id
-                WHERE e.status = ?";
+                WHERE e.status = ?
+                GROUP BY e.id";
         return self::queryAndMap($sql, [$status]);
     }
 

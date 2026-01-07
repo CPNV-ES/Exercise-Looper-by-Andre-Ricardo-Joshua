@@ -49,6 +49,9 @@ After cloning the repository and configuring your `.env` file, run the following
     php database/seed.php
     ```
 
+## Want more documentation ?
+[here the link to the wiki](https://github.com/CPNV-ES/Exercise-Looper-by-Andre-Ricardo-Joshua/wiki)
+
 ## Directory structure
 
 ```shell
@@ -83,4 +86,5 @@ After cloning the repository and configuring your `.env` file, run the following
         │   └── new.php
         ├── gabarit.php
         └── home.php
+
 ```

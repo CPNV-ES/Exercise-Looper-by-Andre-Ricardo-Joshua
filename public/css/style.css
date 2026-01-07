@@ -1,0 +1,138 @@
+header.dashboard .container {
+  text-align: center;
+  font-size: 3rem;
+  color: white;
+  padding: 2rem;
+}
+
+header.dashboard .container h1 {
+  letter-spacing: 1.1rem;
+}
+
+div.dashboard {
+  margin-top: 2rem;
+}
+
+.answering {
+  border-color: rgba(155, 77, 202, 1);
+  background-color: rgba(155, 77, 202, 1);
+}
+.creating {
+  border-color: rgba(224, 164, 88, 1);
+  background-color: rgba(224, 164, 88, 1);
+}
+.managing {
+  border-color: rgba(65, 157, 120, 1);
+  background-color: rgba(65, 157, 120, 1);
+}
+
+header {
+  background-color: rgba(155, 77, 202, 1);
+}
+header.other {
+  background-color: rgba(181, 68, 110, 1);
+}
+header.answering {
+  background-color: rgba(155, 77, 202, 1);
+}
+header.creating {
+  background-color: rgba(224, 164, 88, 1);
+}
+header.managing {
+  background-color: rgba(65, 157, 120, 1);
+}
+
+table.records td:last-child {
+  text-align: right;
+}
+
+.ansering-list {
+  padding-top: 2rem;
+}
+
+.card {
+  background-color: #eee;
+  border-radius: .4rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.card a.button {
+  display: block;
+}
+
+.card .title {
+  margin: 1rem 0;
+}
+
+main.container {
+  margin-top: 5rem;
+}
+
+header.heading {
+  height: 5rem;
+  color: white;
+  display: block;
+  left: 0;
+  max-width: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;  
+}
+header.heading section {
+  display: flex;
+  height: 5rem;
+}
+
+header.heading img {
+  height: 100%;
+}
+header.heading .exercise-label {
+  margin: auto;
+  margin-left: 2rem;
+}
+header.heading .exercise-title, header.heading .exercise-label a {
+  font-weight: bold;
+}
+header.heading .exercise-label a {
+  color: white;
+}
+header.heading .exercise-label a:hover {
+  color: #606c76;
+}
+
+.answer i.empty {
+  /*color: rgba(225, 111, 124, 1);*/
+  color: rgba(244, 88, 102, 1);
+}
+
+.answer i.short {
+  color: rgba(65, 157, 120, 1);
+  /*
+  rgba(193, 174, 124, 1);
+  rgba(90, 113, 106, 1);
+  rgba(224, 164, 88, 1);
+  */
+}
+
+.answer i.filled {
+  color: rgba(65, 157, 120, 1);
+}
+
+dl.answer dt {
+  font-weight: bold;
+}
+
+.display-buttons-column{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0px;
+}
+
+.a-ajusted-size{
+    width: fit-content;
+    height: 20px;
+}

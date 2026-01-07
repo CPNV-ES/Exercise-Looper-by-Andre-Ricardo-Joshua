@@ -1,2 +1,5 @@
 /vendor/
 /perso/
+/.env
+/.idea/
+/database/*.sqlite

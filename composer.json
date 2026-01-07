@@ -1,7 +1,7 @@
 {
   "name": "cpnv/exercise-looper",
   "description": "description",
-  "minimum-stability": "stable",
+  "minimum-stability": "alpha",
   "license": "proprietary",
   "authors": [
     {
@@ -15,5 +15,11 @@
     }
   ],
   "require": {
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
   }
 }

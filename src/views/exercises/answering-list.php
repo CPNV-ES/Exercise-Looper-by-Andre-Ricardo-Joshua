@@ -1,0 +1,10 @@
+<ul class="ansering-list">
+    <?php foreach ( $exercises as $exercise ) { ?>
+    <li class="row">
+      <div class="column card">
+        <div class="title"><?= $exercise->title ?></div>
+        <a class="button" href="/exercises/<?= $exercise->id ?>/fulfillments/new">Take it</a>
+      </div>
+    </li>
+    <?php } ?>
+</ul>
